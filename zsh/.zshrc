@@ -175,10 +175,11 @@ fi
 #neofetch
 
 # Zsh-autosuggestions
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# fzf key bindings
-eval "$(fzf --zsh)"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    # fzf key bindings
+    eval "$(fzf --zsh)"
+fi
 
 # Locale
 export LANG=en_US.UTF-8
