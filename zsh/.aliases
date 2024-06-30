@@ -1,0 +1,4 @@
+alias activate="source env/bin/activate"
+alias tmux="tmux -u"
+alias tldrf='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tldr'
+alias ls='lsd --long'
