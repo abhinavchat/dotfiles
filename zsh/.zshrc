@@ -97,6 +97,10 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         jsontools
         pyenv
     )
+
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     plugins=(
         aws
