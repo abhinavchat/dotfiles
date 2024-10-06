@@ -98,6 +98,23 @@
           ]
         }
       }
+    },
+    "rust-analyzer": {
+      "initialize_options": {
+        "inlayHints": {
+          "maxLength": null,
+          "lifetimeElisionHints": {
+            "enable": "skip_trivial",
+            "useParameterNames": true
+          },
+          "closureReturnTypeHints": {
+            "enable": "always"
+          }
+        },
+        "rust": {
+          "analyzerTargetDir": true
+        }
+      }
     }
   }
 }
