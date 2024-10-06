@@ -1,0 +1,102 @@
+{
+  "active_pane_magnification": 2.5,
+  "auto_update": true,
+  "buffer_font_family": "Zed Plex Mono",
+  "buffer_font_size": 15,
+  "confirm_quit": false,
+  "scrollbar": {
+    "show": "auto",
+    "cursors": true,
+    "git_diff": true,
+    "search_results": true,
+    "selected_symbol": true,
+    "diagnostics": true
+  },
+  "tab_bar": {
+    "show": true
+  },
+  "tabs": {
+    "close_position": "right",
+    "file_icons": true,
+    "git_status": true
+  },
+  "toolbar": {
+    "breadcrumbs": true,
+    "quick_actions": true
+  },
+  "enable_language_server": true,
+  "ensure_final_newline_on_save": true,
+  "format_on_save": "on",
+  "formatter": "language_server",
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.DS_Store",
+    "**/env",
+    "**/.idea"
+  ],
+  "git": {
+    "git_gutter": "tracked_files"
+  },
+  "remove_trailing_whitespace_on_save": true,
+  "project_panel": {
+    "button": true,
+    "default_width": 20,
+    "dock": "left",
+    "file_icons": true,
+    "git_status": true,
+    "indent_size": 20,
+    "auto_reveal_entries": true,
+    "auto_fold_dirs": true,
+    "scrollbar": {
+      "show": null
+    }
+  },
+  "languages": {
+    "Python": {
+      "language_servers": [
+        "pyright",
+        "ruff"
+      ],
+      "format_on_save": "on",
+      "formatter": [
+        {
+          "language_server": {
+            "name": "ruff"
+          }
+        },
+        {
+          "code_actions": {
+            "source.fixAll.ruff": true,
+            "source.organizeImports.ruff": true
+          }
+        }
+      ],
+      "indent_guides": {
+        "enabled": true
+      }
+    }
+  },
+  "lsp": {
+    "pyright": {
+      "settings": {
+        "python.analysis": {
+          "diagnosticMode": "workspace",
+          "typeCheckingMode": "strict"
+        },
+        "python": {
+          "pythonPath": "env/bin/python"
+        }
+      }
+    },
+    "ruff": {
+      "initialization_options": {
+        "lineLength": 80,
+        "lint": {
+          "extendSelect": [
+            "I"
+          ]
+        }
+      }
+    }
+  }
+}
