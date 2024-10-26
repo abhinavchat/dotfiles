@@ -1,4 +1,11 @@
 {
+  "assistant": {
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-3-5-sonnet-latest"
+    },
+    "version": "2"
+  },
   "theme": "Catppuccin Mocha",
   "active_pane_magnification": 2.5,
   "auto_update": true,
@@ -100,6 +107,9 @@
       }
     },
     "rust-analyzer": {
+      "binary": {
+        "ignore_system_version": true
+      },
       "initialize_options": {
         "inlayHints": {
           "maxLength": null,
