@@ -208,3 +208,16 @@ fi
 # Locale
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+
+# ngrok completions
+if command -v ngrok &>/dev/null; then
+    eval "$(ngrok completion)"
+fi
+
+# XDG_CONFIG_HOME
+export XDG_CONFIG_HOME=/Users/abhinavchat/.config
