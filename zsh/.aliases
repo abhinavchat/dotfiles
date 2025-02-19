@@ -1,6 +1,15 @@
+# Activate python virtual environments
 alias activate="source env/bin/activate"
+
+# Start tmux session
 alias tmux="tmux -u"
+
+# Query tldr, integrate with fzf
 alias tldrf='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tldr'
+
+# Git status
+alias gs='git status'
+
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # For Ubuntu
     alias ls='exa --long --icons'

@@ -144,11 +144,11 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
     # Set GOBIN path
-    export GOBIN="/Users/abhinavchat/go/bin"
+    export GOBIN="/Users/$(whoami)/go/bin"
     export PATH=$GOBIN:$PATH
 
     # Set miktex path
-    export PATH="/Users/abhinavchat/bin":$PATH
+    export PATH="/Users/$(whoami)/bin":$PATH
 
     source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     # fzf key bindings
@@ -220,4 +220,4 @@ if command -v ngrok &>/dev/null; then
 fi
 
 # XDG_CONFIG_HOME
-export XDG_CONFIG_HOME=/Users/abhinavchat/.config
+export XDG_CONFIG_HOME=/Users/$(whoami)/.config
