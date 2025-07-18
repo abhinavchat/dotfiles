@@ -105,6 +105,10 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     # XDG_CONFIG_HOME
     export XDG_CONFIG_HOME=/Users/$(whoami)/.config
 
+    # Java path
+    export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+    export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
+    
     source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     # fzf key bindings
     eval "$(fzf --zsh)"
