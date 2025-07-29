@@ -170,3 +170,6 @@ fpath=(/Users/abhinavchat/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
+
+# Set GPG-TTY
+export GPG_TTY=$(tty)
