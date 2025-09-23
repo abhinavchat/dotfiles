@@ -1,10 +1,30 @@
 {
-  "assistant": {
-    "default_model": {
-      "provider": "ollama",
-      "model": "qwen2.5-coder:latest"
+  "context_servers": {
+    "mcp-server-context7": {
+      "source": "extension",
+      "settings": {
+        "default_minimum_tokens": "10000"
+      }
     },
-    "version": "2"
+    "postgres-context-server": {
+      "enabled": true,
+      "source": "extension",
+      "settings": {
+        "database_url": ""
+      }
+    }
+  },
+  "ssh_connections": [],
+  "features": {
+    "edit_prediction_provider": "zed"
+  },
+  "agent": {
+    "default_profile": "ask",
+    "always_allow_tool_actions": true,
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-sonnet-4"
+    },
   },
   "terminal": {
     "font_family": "MesloLGS NF"
@@ -21,7 +41,7 @@
     "git_diff": true,
     "search_results": true,
     "selected_symbol": true,
-    "diagnostics": true
+    "diagnostics": "all"
   },
   "tab_bar": {
     "show": true
@@ -95,7 +115,12 @@
           "typeCheckingMode": "strict"
         },
         "python": {
-          "pythonPath": "env/bin/python"
+          "pythonPath": ".venv/bin/python",
+          "venvPath": ".",
+          "venv": {
+            "path": ".venv",
+            "type": "venv"
+          }
         }
       }
     },
