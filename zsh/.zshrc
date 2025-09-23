@@ -93,25 +93,24 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
     # Set GOBIN path
-    export GOBIN="/Users/$(whoami)/go/bin"
+    export GOBIN="$HOME/go/bin"
     export PATH=$GOBIN:$PATH
 
     # Set miktex path
-    export PATH="/Users/$(whoami)/bin":$PATH
+    export PATH="$HOME/bin":$PATH
 
     # Added by LM Studio CLI (lms)
-    export PATH="$PATH:/Users/abhinavchat/.lmstudio/bin"
+    export PATH="$PATH:$HOME/.lmstudio/bin"
 
     # XDG_CONFIG_HOME
     export XDG_CONFIG_HOME=/Users/$(whoami)/.config
 
-    # Java path
-    export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
-    export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
-    
     source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     # fzf key bindings
     eval "$(fzf --zsh)"
+
+   # Add brew installed GNU nano path instead of pre-installed pico
+   export PATH="/opt/homebrew/bin:$PATH"
 fi
 
 source $ZSH/oh-my-zsh.sh
@@ -166,10 +165,15 @@ eval "$(uv generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
 
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/abhinavchat/.docker/completions $fpath)
+fpath=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
 
 # Set GPG-TTY
 export GPG_TTY=$(tty)
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/abhinavchat/.lmstudio/bin"
+# End of LM Studio CLI section
+
