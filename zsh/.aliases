@@ -46,3 +46,16 @@ alias twoway-run='docker run --rm --platform linux/amd64 --name ces-int-twoway -
 alias notification-run='docker run --rm --platform linux/amd64 -p 9020:9080 carey-notification'
 
 alias trip-status-api run='docker run --rm --platform linux/amd64 -p 9991:9999 trip-status-api'
+
+# Git pre-push check
+alias git-prepushcheck='
+echo "🧭 Current branch:" && \
+git branch --show-current && \
+echo "\n🔍 Commits to be pushed:" && \
+git log origin/$(git branch --show-current)..HEAD --oneline || echo "(No new commits)" && \
+echo "\n🧱 Files changed vs remote:" && \
+git diff --stat origin/$(git branch --show-current) && \
+echo "\n🧪 Push dry run:" && \
+git push --dry-run
+'
+
