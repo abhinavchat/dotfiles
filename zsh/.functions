@@ -1,0 +1,40 @@
+# Switch between kubeconfig files interactively (works even if ls is aliased)
+kcswitch() {
+  local kube_dir="$HOME/.kube"
+  local files=("$kube_dir"/*.kubeconfig "$kube_dir/config")
+
+  echo ""
+  echo "Available kubeconfig files:"
+  local i=1
+  for f in "${files[@]}"; do
+    if [ -f "$f" ]; then
+      echo "  [$i] $(basename "$f")"
+      ((i++))
+    fi
+  done
+
+  echo -n "\nEnter number to select kubeconfig: "
+  local choice
+  read choice
+
+  # numeric check (works in zsh & bash)
+  case "$choice" in
+    ''|*[!0-9]*) echo "❌ Invalid input. Please enter a number."; return 1;;
+  esac
+
+  local index=1
+  for f in "${files[@]}"; do
+    if [ -f "$f" ]; then
+      if [ "$index" -eq "$choice" ]; then
+        export KUBECONFIG="$f"
+        echo "✅ Switched to $(basename "$f")"
+        echo "Current user: $(oc whoami 2>/dev/null || echo 'not logged in')"
+        return 0
+      fi
+      ((index++))
+    fi
+  done
+
+  echo "❌ Invalid selection. No kubeconfig switched."
+  return 1
+}

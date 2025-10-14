@@ -149,6 +149,11 @@ if [ -f ~/.secrets_env ]; then
     . ~/.secrets_env
 fi
 
+# Source functions from .functions
+if [ -f ~/.functions ]; then
+    . ~/.functions
+fi
+
 # Neofetch
 #neofetch
 
@@ -176,4 +181,3 @@ export GPG_TTY=$(tty)
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/abhinavchat/.lmstudio/bin"
 # End of LM Studio CLI section
-
