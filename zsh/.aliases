@@ -59,3 +59,6 @@ echo "\n🧪 Push dry run:" && \
 git push --dry-run
 '
 
+# Openshift ROSA
+alias kcshow='echo "Current kubeconfig: ${KUBECONFIG:-$HOME/.kube/config}" && oc config current-context'
+alias kcreset='export KUBECONFIG=$HOME/.kube/config && echo "🔄 Reset to default kubeconfig" && oc whoami'
