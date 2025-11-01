@@ -45,7 +45,7 @@ alias twoway-run='docker run --rm --platform linux/amd64 --name ces-int-twoway -
 
 alias notification-run='docker run --rm --platform linux/amd64 -p 9020:9080 carey-notification'
 
-alias trip-status-api run='docker run --rm --platform linux/amd64 -p 9991:9999 trip-status-api'
+alias trip-status-api-run='docker run --rm --platform linux/amd64 -p 9991:9999 trip-status-api'
 
 # Git pre-push check
 alias git-prepushcheck='
@@ -60,5 +60,5 @@ git push --dry-run
 '
 
 # Openshift ROSA
-alias kcshow='echo "Current kubeconfig: ${KUBECONFIG:-$HOME/.kube/config}" && oc config current-context'
+alias kcshow='echo "Current kubeconfig: ${KUBECONFIG:-$HOME/.kube/config}" && echo "Current Context: $(oc config current-context)" && echo "User: $(oc whoami)"'
 alias kcreset='export KUBECONFIG=$HOME/.kube/config && echo "🔄 Reset to default kubeconfig" && oc whoami'

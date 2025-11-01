@@ -5,6 +5,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Set GPG-TTY early to ensure GPG is available for all tools
+# This must be set before any tools that might use GPG (git, signing, etc.)
+export GPG_TTY=$(tty)
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
@@ -103,14 +107,31 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="$PATH:$HOME/.lmstudio/bin"
 
     # XDG_CONFIG_HOME
-    export XDG_CONFIG_HOME=/Users/$(whoami)/.config
+    export XDG_CONFIG_HOME="$HOME/.config"
 
-    source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
     # fzf key bindings
     eval "$(fzf --zsh)"
 
    # Add brew installed GNU nano path instead of pre-installed pico
    export PATH="/opt/homebrew/bin:$PATH"
+
+   # Load atuin if available
+   if [ -f "$HOME/.atuin/bin/env" ]; then
+       . "$HOME/.atuin/bin/env"
+   fi
+
+   # Java path
+   # export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+   # export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
+
+   # Sourcing sdkman for Java
+   #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+   export SDKMAN_DIR="$HOME/.sdkman"
+   [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+   # ✅ FORCE SDKMAN JAVA FIRST in PATH
+   export PATH="$JAVA_HOME/bin:$PATH"
 fi
 
 source $ZSH/oh-my-zsh.sh
@@ -158,7 +179,6 @@ fi
 #neofetch
 
 eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
 
 # ngrok completions
 if command -v ngrok &>/dev/null; then
@@ -174,10 +194,3 @@ fpath=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
-
-# Set GPG-TTY
-export GPG_TTY=$(tty)
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/abhinavchat/.lmstudio/bin"
-# End of LM Studio CLI section

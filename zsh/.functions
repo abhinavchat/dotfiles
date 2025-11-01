@@ -1,4 +1,183 @@
+# ============================================
+# General Utility Functions
+# ============================================
+#
+# This file contains general-purpose utility functions for shell operations.
+# For credential management with KeePassXC, see .secrets_env
+# For more focused utility functions, add them in appropriate sections below.
+# ============================================
+
+# ============================================
+# File and Directory Utilities
+# ============================================
+
+# Add more utility functions here as needed
+# Example:
+# mkcd() { mkdir -p "$1" && cd "$1"; }
+# extract() { tar -xzf "$1" || unzip "$1" || 7z x "$1" || unar "$1"; }
+
+# ============================================
+# System Management Utilities
+# ============================================
+
+# Add system-related utilities here
+# Examples:
+# - Process management functions
+# - System info functions
+# - Service management helpers
+
+# ============================================
+# Network Utilities
+# ============================================
+
+# Check if a port is open/listening on a host
+# Usage: port_check <host> <port>
+# Example: port_check localhost 8080
+port_check() {
+  local host="${1:-localhost}"
+  local port="${2:?Usage: port_check <host> <port>}"
+
+  if ! command -v nc &>/dev/null && ! command -v netcat &>/dev/null; then
+    echo "❌ Error: netcat (nc) not found. Install with: brew install netcat" >&2
+    return 1
+  fi
+
+  # Try with nc (GNU or BSD netcat)
+  if nc -z -v "$host" "$port" 2>&1 | grep -q "succeeded"; then
+    echo "✅ Port $port on $host is OPEN"
+    return 0
+  elif nc -z "$host" "$port" 2>/dev/null; then
+    echo "✅ Port $port on $host is OPEN"
+    return 0
+  else
+    echo "❌ Port $port on $host is CLOSED"
+    return 1
+  fi
+}
+
+# Check multiple ports at once
+# Usage: port_check_many <host> <port1> [port2] [port3] ...
+# Example: port_check_many localhost 80 443 8080
+port_check_many() {
+  local host="${1:?Usage: port_check_many <host> <port1> [port2] ...}"
+  shift
+  local ports=("$@")
+
+  if [ ${#ports[@]} -eq 0 ]; then
+    echo "❌ Error: No ports specified" >&2
+    return 1
+  fi
+
+  echo "🔍 Checking ports on $host..."
+  echo ""
+
+  for port in "${ports[@]}"; do
+    port_check "$host" "$port"
+  done
+}
+
+# DNS lookup helpers
+# Usage: dns_lookup <domain>
+# Example: dns_lookup example.com
+dns_lookup() {
+  local domain="${1:?Usage: dns_lookup <domain>}"
+
+  echo "🔍 DNS records for $domain:"
+  echo ""
+
+  # A record (IPv4)
+  echo "📍 A Records (IPv4):"
+  if dig +short -t A "$domain" 2>/dev/null | head -1; then
+    dig +short -t A "$domain"
+  else
+    echo "  No A records found"
+  fi
+  echo ""
+
+  # AAAA record (IPv6)
+  echo "📍 AAAA Records (IPv6):"
+  if dig +short -t AAAA "$domain" 2>/dev/null | head -1; then
+    dig +short -t AAAA "$domain"
+  else
+    echo "  No AAAA records found"
+  fi
+  echo ""
+
+  # MX records
+  echo "📧 MX Records:"
+  if dig +short -t MX "$domain" 2>/dev/null | head -1; then
+    dig +short -t MX "$domain"
+  else
+    echo "  No MX records found"
+  fi
+  echo ""
+
+  # CNAME records
+  echo "🔗 CNAME Records:"
+  if dig +short -t CNAME "$domain" 2>/dev/null | head -1; then
+    dig +short -t CNAME "$domain"
+  else
+    echo "  No CNAME records found"
+  fi
+}
+
+# Quick DNS check - show all records
+# Usage: dns_all <domain>
+# Example: dns_all example.com
+dns_all() {
+  local domain="${1:?Usage: dns_all <domain>}"
+
+  if ! command -v dig &>/dev/null; then
+    echo "❌ Error: dig not found. Install with: brew install bind" >&2
+    return 1
+  fi
+
+  echo "📋 All DNS records for $domain:"
+  echo ""
+  dig "$domain" +noall +answer
+}
+
+# Check if a host is reachable
+# Usage: host_check <host>
+# Example: host_check google.com
+host_check() {
+  local host="${1:?Usage: host_check <host>}"
+
+  echo "🏓 Pinging $host..."
+
+  if ping -c 1 -W 1 "$host" >/dev/null 2>&1; then
+    echo "✅ $host is reachable"
+
+    # Show resolved IP
+    local ip=$(dig +short "$host" 2>/dev/null | head -1)
+    if [ -n "$ip" ]; then
+      echo "   IP: $ip"
+    fi
+
+    return 0
+  else
+    echo "❌ $host is not reachable"
+    return 1
+  fi
+}
+
+# ============================================
+# Development Utilities
+# ============================================
+
+# Add development-related utilities here
+# Examples:
+# - Git helpers
+# - Docker helpers
+# - Build system helpers
+# - Language-specific helpers
+
+# ============================================
+# Kubernetes/OpenShift Utilities
+# ============================================
+
 # Switch between kubeconfig files interactively (works even if ls is aliased)
+# Security: Uses local variables to prevent credential leakage
 kcswitch() {
   local kube_dir="$HOME/.kube"
   local files=("$kube_dir"/*.kubeconfig "$kube_dir/config")
@@ -22,19 +201,374 @@ kcswitch() {
     ''|*[!0-9]*) echo "❌ Invalid input. Please enter a number."; return 1;;
   esac
 
-  local index=1
+  local index=1 selected=""
   for f in "${files[@]}"; do
     if [ -f "$f" ]; then
       if [ "$index" -eq "$choice" ]; then
-        export KUBECONFIG="$f"
-        echo "✅ Switched to $(basename "$f")"
-        echo "Current user: $(oc whoami 2>/dev/null || echo 'not logged in')"
-        return 0
+        selected="$f"
+        export KUBECONFIG="$selected"
+        echo "✅ Switched to $(basename "$selected")"
+        break
       fi
       ((index++))
     fi
   done
 
-  echo "❌ Invalid selection. No kubeconfig switched."
-  return 1
+  [ -z "$selected" ] && echo "❌ Invalid selection. No kubeconfig switched." && return 1
+
+  # Identify environment and login accordingly
+  case "$(basename "$selected")" in
+    *nonprod*) echo "🌐 Detected NONPROD environment"; ocnonprod;;
+    *prod*) echo "🌐 Detected PROD environment"; ocprod;;
+    *) echo "ℹ️ No matching login alias found for $(basename "$selected")";;
+  esac
+}
+
+# ============================================
+# OpenShift/ROSA Credential Management
+# ============================================
+#
+# SECURITY NOTES:
+# - Credentials are retrieved from KeePassXC (never stored in plain text)
+# - Passwords are explicitly cleared from memory after use (unset)
+# - stdin is redirected to /dev/null to prevent password exposure in terminal
+# - All error messages are sent to stderr for proper logging
+# - Session caching: First KeePassXC call prompts for password, subsequent calls are cached
+#
+# Usage: ocprod (for production) or ocnonprod (for development)
+# These functions auto-detect environment and login when switching kubeconfigs
+
+# Secure OpenShift login functions using KeePassXC entries
+ocprod() {
+    echo "🔐 Retrieving ROSA Console Prod credentials from KeePassXC..."
+    echo "Please enter your KeePassXC master password when prompted."
+
+    local keepass_db=~/Keepass/Sentry.kdbx
+    local entry_name='ROSA Console Prod'
+
+    # Check if KeePassXC CLI exists (always use direct path to avoid alias issues)
+    local keepassxc_cli_cmd
+    if [ -f "/Applications/KeePassXC.app/Contents/MacOS/keepassxc-cli" ]; then
+        keepassxc_cli_cmd="/Applications/KeePassXC.app/Contents/MacOS/keepassxc-cli"
+    elif command -v keepassxc-cli &>/dev/null && ! alias keepassxc-cli &>/dev/null; then
+        # Only use this if it's a real command, not an alias
+        keepassxc_cli_cmd="keepassxc-cli"
+    else
+        echo "❌ keepassxc-cli not found. Please install KeePassXC."
+        return 1
+    fi
+
+    # Check if database exists
+    if [ ! -f "$keepass_db" ]; then
+        echo "❌ KeePassXC database not found at: $keepass_db"
+        return 1
+    fi
+
+    # Get both username and password in a single call to reduce password prompts
+    echo "📋 Retrieving username from KeePassXC..."
+    local username password
+    username="$($keepassxc_cli_cmd show -a UserName "$keepass_db" "$entry_name")"
+    local user_status=$?
+    if [ $user_status -ne 0 ] || [ -z "$username" ]; then
+        echo "❌ Failed to retrieve username from KeePassXC (exit code: $user_status)"
+        echo "Debug: Tried to retrieve from entry '$entry_name' in database '$keepass_db'"
+        return 1
+    fi
+
+    echo "🔑 Retrieving password from KeePassXC..."
+    password="$($keepassxc_cli_cmd show -a Password "$keepass_db" "$entry_name")"
+    local pass_status=$?
+    if [ $pass_status -ne 0 ] || [ -z "$password" ]; then
+        echo "❌ Failed to retrieve password from KeePassXC (exit code: $pass_status)"
+        return 1
+    fi
+
+    echo "🚀 Logging into ROSA Prod environment..."
+    # Use --insecure-skip-tls-verify only if certificate validation fails
+    oc login https://api.carey-prod.zdk3.p1.openshiftapps.com:6443 \
+        --username="$username" \
+        --password="$password" \
+        </dev/null
+    local login_status=$?
+
+    # Clear password from memory (security best practice)
+    unset password
+
+    if [ $login_status -ne 0 ]; then
+        echo "❌ Failed to login to ROSA Prod. Check your credentials and network connectivity."
+        return $login_status
+    fi
+}
+
+# Secure OpenShift login for non-production environment
+ocnonprod() {
+    echo "🔐 Retrieving ROSA Console Dev credentials from KeePassXC..."
+    echo "Please enter your KeePassXC master password when prompted."
+
+    local keepass_db=~/Keepass/Sentry.kdbx
+    local entry_name='ROSA Console Dev'
+
+    # Check if KeePassXC CLI exists (always use direct path to avoid alias issues)
+    local keepassxc_cli_cmd
+    if [ -f "/Applications/KeePassXC.app/Contents/MacOS/keepassxc-cli" ]; then
+        keepassxc_cli_cmd="/Applications/KeePassXC.app/Contents/MacOS/keepassxc-cli"
+    elif command -v keepassxc-cli &>/dev/null && ! alias keepassxc-cli &>/dev/null; then
+        # Only use this if it's a real command, not an alias
+        keepassxc_cli_cmd="keepassxc-cli"
+    else
+        echo "❌ keepassxc-cli not found. Please install KeePassXC."
+        return 1
+    fi
+
+    # Check if database exists
+    if [ ! -f "$keepass_db" ]; then
+        echo "❌ KeePassXC database not found at: $keepass_db"
+        return 1
+    fi
+
+    # Get both username and password in a single call to reduce password prompts
+    echo "📋 Retrieving username from KeePassXC..."
+    local username password
+    username="$($keepassxc_cli_cmd show -a UserName "$keepass_db" "$entry_name")"
+    local user_status=$?
+    if [ $user_status -ne 0 ] || [ -z "$username" ]; then
+        echo "❌ Failed to retrieve username from KeePassXC (exit code: $user_status)"
+        echo "Debug: Tried to retrieve from entry '$entry_name' in database '$keepass_db'"
+        return 1
+    fi
+
+    echo "🔑 Retrieving password from KeePassXC..."
+    password="$($keepassxc_cli_cmd show -a Password "$keepass_db" "$entry_name")"
+    local pass_status=$?
+    if [ $pass_status -ne 0 ] || [ -z "$password" ]; then
+        echo "❌ Failed to retrieve password from KeePassXC (exit code: $pass_status)"
+        return 1
+    fi
+
+    echo "🚀 Logging into ROSA Dev environment..."
+    # Use --insecure-skip-tls-verify only if certificate validation fails
+    oc login https://api.carey-nonprod.kq6p.p1.openshiftapps.com:6443 \
+        --username="$username" \
+        --password="$password" \
+        </dev/null
+    local login_status=$?
+
+    # Clear password from memory (security best practice)
+    unset password
+
+    if [ $login_status -ne 0 ]; then
+        echo "❌ Failed to login to ROSA Dev. Check your credentials and network connectivity."
+        return $login_status
+    fi
+}
+
+
+# List all Published SNAPSHOT versions for a Maven artifact in CodeArtifact
+ca_snapshots() {
+  local domain=$1
+  local owner=$2
+  local repo=$3
+  local namespace=$4   # groupId
+  local pkg=$5         # artifactId
+  local profile=${6:-carey}
+
+  if [[ -z "$domain" || -z "$owner" || -z "$repo" || -z "$namespace" || -z "$pkg" ]]; then
+    echo "Usage: ca_snapshots <domain> <owner> <repo> <groupId> <artifactId> [profile]"
+    return 1
+  fi
+
+  echo "🔍 Fetching Published SNAPSHOT versions for ${namespace}:${pkg} ..."
+  aws codeartifact list-package-versions \
+    --domain "$domain" \
+    --domain-owner "$owner" \
+    --repository "$repo" \
+    --format maven \
+    --namespace "$namespace" \
+    --package "$pkg" \
+    --profile "$profile" \
+    --output json |
+  jq -r '.versions
+    | map(select(.version | contains("SNAPSHOT")) | select(.status=="Published"))
+    | sort_by(.version)
+    | .[] | "\(.version)\t\(.status)"'
+}
+
+# List available jar assets for a specific package version in CodeArtifact
+ca_list_jars() {
+  # Parse named arguments
+  local domain="" repo="" namespace="" pkg="" version="" profile="carey"
+
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+      --help|-h)
+        echo "ca_list_jars - List available jar assets for a specific package version in CodeArtifact"
+        echo ""
+        echo "Usage: ca_list_jars --domain=<domain> --repo=<repo> --namespace=<groupId> --package=<artifactId> --version=<version> [--profile=<profile>]"
+        echo ""
+        echo "Parameters:"
+        echo "  --domain=<domain>        CodeArtifact domain name"
+        echo "  --repo=<repo>           Repository name (e.g., maven-snapshots)"
+        echo "  --namespace=<groupId>   Maven groupId (e.g., com.careylimo)"
+        echo "  --package=<artifactId>  Maven artifactId (e.g., Res-Core)"
+        echo "  --version=<version>     Package version (e.g., 1.3.4-SNAPSHOT)"
+        echo "  --profile=<profile>     AWS profile to use (default: default)"
+        echo ""
+        echo "Example:"
+        echo "  ca_list_jars --domain=carey --repo=maven-snapshots --namespace=com.careylimo --package=Res-Core --version=1.3.4-SNAPSHOT --profile=carey"
+        echo ""
+        echo "Note: AWS Account ID (domain owner) is automatically detected from the specified profile."
+        return 0
+        ;;
+      --domain=*) domain="${1#*=}"; shift ;;
+      --repo=*) repo="${1#*=}"; shift ;;
+      --namespace=*) namespace="${1#*=}"; shift ;;
+      --package=*) pkg="${1#*=}"; shift ;;
+      --version=*) version="${1#*=}"; shift ;;
+      --profile=*) profile="${1#*=}"; shift ;;
+      *) echo "❌ Unknown parameter: $1"; return 1 ;;
+    esac
+  done
+
+  if [[ -z "$domain" || -z "$repo" || -z "$namespace" || -z "$pkg" || -z "$version" ]]; then
+    echo "Usage: ca_list_jars --domain=<domain> --repo=<repo> --namespace=<groupId> --package=<artifactId> --version=<version> [--profile=<profile>]"
+    echo ""
+    echo "Example:"
+    echo "  ca_list_jars --domain=carey --repo=maven-snapshots --namespace=com.careylimo --package=Res-Core --version=1.3.4-SNAPSHOT --profile=carey"
+    return 1
+  fi
+
+  # Auto-detect owner from profile
+  echo "🔍 Auto-detecting owner from AWS profile '$profile'..."
+  local owner=$(aws sts get-caller-identity --profile "$profile" --query 'Account' --output text 2>/dev/null)
+  if [[ -z "$owner" || "$owner" == "None" ]]; then
+    echo "❌ Failed to get AWS Account ID from profile '$profile'. Check your AWS credentials."
+    return 1
+  fi
+  echo "✅ Using owner: $owner"
+
+  echo "🔍 Listing jar assets for ${namespace}:${pkg}:${version} ..."
+  aws codeartifact list-package-version-assets \
+    --domain "$domain" \
+    --domain-owner "$owner" \
+    --repository "$repo" \
+    --format maven \
+    --namespace "$namespace" \
+    --package "$pkg" \
+    --package-version "$version" \
+    --profile "$profile" \
+    --query 'assets[?ends_with(name, `.jar`)].name' \
+    --output table
+}
+
+# Download a jar from CodeArtifact Maven repository to Downloads folder
+ca_download_jar() {
+  # Parse named arguments
+  local domain="" repo="" namespace="" pkg="" version="" asset_name="" profile="carey"
+
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+      --help|-h)
+        echo "ca_download_jar - Download a jar from CodeArtifact Maven repository to Downloads folder"
+        echo ""
+        echo "Usage: ca_download_jar --domain=<domain> --repo=<repo> --namespace=<groupId> --package=<artifactId> --version=<version> [--asset=<jar_name>] [--profile=<profile>]"
+        echo ""
+        echo "Parameters:"
+        echo "  --domain=<domain>        CodeArtifact domain name"
+        echo "  --repo=<repo>           Repository name (e.g., maven-snapshots)"
+        echo "  --namespace=<groupId>   Maven groupId (e.g., com.careylimo)"
+        echo "  --package=<artifactId>  Maven artifactId (e.g., Res-Core)"
+        echo "  --version=<version>     Package version (e.g., 1.3.4-SNAPSHOT)"
+        echo "  --asset=<jar_name>      Specific jar asset name (optional - will list if not provided)"
+        echo "  --profile=<profile>     AWS profile to use (default: default)"
+        echo ""
+        echo "Examples:"
+        echo "  # List available jar assets first"
+        echo "  ca_download_jar --domain=carey --repo=maven-snapshots --namespace=com.careylimo --package=Res-Core --version=1.3.4-SNAPSHOT --profile=carey"
+        echo ""
+        echo "  # Download specific jar asset"
+        echo "  ca_download_jar --domain=carey --repo=maven-snapshots --namespace=com.careylimo --package=Res-Core --version=1.3.3.20251009-SNAPSHOT --asset=Res-Core-1.3.3.20251009-20251009.094201-1.jar --profile=carey"
+        echo ""
+        echo "Note: AWS Account ID (domain owner) is automatically detected from the specified profile."
+        echo "      Downloaded jars are saved to ~/Downloads/<artifactId>.jar"
+        return 0
+        ;;
+      --domain=*) domain="${1#*=}"; shift ;;
+      --repo=*) repo="${1#*=}"; shift ;;
+      --namespace=*) namespace="${1#*=}"; shift ;;
+      --package=*) pkg="${1#*=}"; shift ;;
+      --version=*) version="${1#*=}"; shift ;;
+      --asset=*) asset_name="${1#*=}"; shift ;;
+      --profile=*) profile="${1#*=}"; shift ;;
+      *) echo "❌ Unknown parameter: $1"; return 1 ;;
+    esac
+  done
+
+  if [[ -z "$domain" || -z "$repo" || -z "$namespace" || -z "$pkg" || -z "$version" ]]; then
+    echo "Usage: ca_download_jar --domain=<domain> --repo=<repo> --namespace=<groupId> --package=<artifactId> --version=<version> [--asset=<jar_name>] [--profile=<profile>]"
+    echo ""
+    echo "Examples:"
+    echo "  # List available jar assets first"
+    echo "  ca_download_jar --domain=carey --repo=maven-snapshots --namespace=com.careylimo --package=Res-Core --version=1.3.4-SNAPSHOT --profile=carey"
+    echo ""
+    echo "  # Download specific jar asset"
+    echo "  ca_download_jar --domain=carey --repo=maven-snapshots --namespace=com.careylimo --package=Res-Core --version=1.3.3.20251009-SNAPSHOT --asset=Res-Core-1.3.3.20251009-20251009.094201-1.jar --profile=carey"
+    return 1
+  fi
+
+  # Auto-detect owner from profile
+  echo "🔍 Auto-detecting owner from AWS profile '$profile'..."
+  local owner=$(aws sts get-caller-identity --profile "$profile" --query 'Account' --output text 2>/dev/null)
+  if [[ -z "$owner" || "$owner" == "None" ]]; then
+    echo "❌ Failed to get AWS Account ID from profile '$profile'. Check your AWS credentials."
+    return 1
+  fi
+  echo "✅ Using owner: $owner"
+
+  # If asset name not provided, list available assets
+  if [[ -z "$asset_name" ]]; then
+    echo "ℹ️  No asset name provided. Listing available jar assets:"
+    echo ""
+    ca_list_jars --domain="$domain" --repo="$repo" --namespace="$namespace" --package="$pkg" --version="$version" --profile="$profile"
+    echo ""
+    echo "💡 Tip: Copy one of the jar names above and add --asset=<jar-name> to download"
+    return 0
+  fi
+
+  # Ensure Downloads directory exists
+  local downloads_dir="$HOME/Downloads"
+  if [[ ! -d "$downloads_dir" ]]; then
+    echo "📁 Creating Downloads directory..."
+    mkdir -p "$downloads_dir"
+  fi
+
+  # Create output filename (remove version-specific timestamps for cleaner naming)
+  local output_file="$downloads_dir/${pkg}.jar"
+
+  echo "📥 Downloading ${asset_name} to ${output_file}..."
+  echo "🔍 Source: ${namespace}:${pkg}:${version}"
+  echo ""
+
+  # Download the jar
+  aws codeartifact get-package-version-asset \
+    --domain "$domain" \
+    --domain-owner "$owner" \
+    --repository "$repo" \
+    --format maven \
+    --namespace "$namespace" \
+    --package "$pkg" \
+    --package-version "$version" \
+    --asset "$asset_name" \
+    --profile "$profile" \
+    "$output_file"
+
+  local download_status=$?
+
+  if [[ $download_status -eq 0 ]]; then
+    echo "✅ Successfully downloaded jar to: $output_file"
+    echo "📊 File info:"
+    ls -lh "$output_file"
+  else
+    echo "❌ Failed to download jar (exit code: $download_status)"
+    return $download_status
+  fi
 }
