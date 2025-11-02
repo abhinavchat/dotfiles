@@ -1,158 +1,305 @@
 {
-  "context_servers": {
-    "mcp-server-context7": {
-      "source": "extension",
-      "settings": {
-        "default_minimum_tokens": "10000"
-      }
+    "ssh_connections": [],
+    "auto_signature_help": true,
+    "auto_update": true,
+    "base_keymap": "JetBrains",
+    "close_on_file_delete": true,
+    "features": {
+        "edit_prediction_provider": "zed"
     },
-    "postgres-context-server": {
-      "enabled": true,
-      "source": "extension",
-      "settings": {
-        "database_url": ""
-      }
-    }
-  },
-  "ssh_connections": [],
-  "features": {
-    "edit_prediction_provider": "zed"
-  },
-  "agent": {
-    "default_profile": "ask",
-    "always_allow_tool_actions": true,
-    "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-sonnet-4"
+    "agent": {
+        "default_profile": "write",
+        "model_parameters": []
     },
-  },
-  "terminal": {
-    "font_family": "MesloLGS NF"
-  },
-  "theme": "Catppuccin Mocha",
-  "active_pane_magnification": 2.5,
-  "auto_update": true,
-  "buffer_font_family": "Zed Plex Mono",
-  "buffer_font_size": 15,
-  "confirm_quit": false,
-  "scrollbar": {
-    "show": "auto",
-    "cursors": true,
-    "git_diff": true,
-    "search_results": true,
-    "selected_symbol": true,
-    "diagnostics": "all"
-  },
-  "tab_bar": {
-    "show": true
-  },
-  "tabs": {
-    "close_position": "right",
-    "file_icons": true,
-    "git_status": true
-  },
-  "toolbar": {
-    "breadcrumbs": true,
-    "quick_actions": true
-  },
-  "enable_language_server": true,
-  "ensure_final_newline_on_save": true,
-  "format_on_save": "on",
-  "formatter": "language_server",
-  "file_scan_exclusions": [
-    "**/.git",
-    "**/.DS_Store",
-    "**/env",
-    "**/.idea"
-  ],
-  "git": {
-    "git_gutter": "tracked_files"
-  },
-  "remove_trailing_whitespace_on_save": true,
-  "project_panel": {
-    "button": true,
-    "default_width": 20,
-    "dock": "left",
-    "file_icons": true,
-    "git_status": true,
-    "indent_size": 20,
-    "auto_reveal_entries": true,
-    "auto_fold_dirs": true,
+    "terminal": {
+        "font_family": "MesloLGS NF",
+        "dock": "bottom",
+        "copy_on_select": false,
+        "blinking": "terminal_controlled",
+        "button": true,
+        "working_directory": "current_project_directory",
+        "detect_venv": {
+            "on": {
+                "directories": [
+                    ".venv",
+                    ".env"
+                ],
+                "activate_script": "default"
+            }
+        },
+        "toolbar": {
+            "breadcrumbs": true
+        }
+    },
+    "theme": "Catppuccin Mocha",
+    "buffer_font_family": ".ZedMono",
+    "buffer_font_size": 15,
+    "confirm_quit": false,
     "scrollbar": {
-      "show": null
-    }
-  },
-  "languages": {
-    "Python": {
-      "language_servers": [
-        "pyright",
-        "ruff"
-      ],
-      "format_on_save": "on",
-      "formatter": [
-        {
-          "language_server": {
-            "name": "ruff"
-          }
-        },
-        {
-          "code_actions": {
-            "source.fixAll.ruff": true,
-            "source.organizeImports.ruff": true
-          }
-        }
-      ],
-      "indent_guides": {
-        "enabled": true
-      }
-    }
-  },
-  "lsp": {
-    "pyright": {
-      "settings": {
-        "python.analysis": {
-          "diagnosticMode": "workspace",
-          "typeCheckingMode": "strict"
-        },
-        "python": {
-          "pythonPath": ".venv/bin/python",
-          "venvPath": ".",
-          "venv": {
-            "path": ".venv",
-            "type": "venv"
-          }
-        }
-      }
+        "show": "auto",
+        "cursors": true,
+        "git_diff": true,
+        "search_results": true,
+        "selected_symbol": true,
+        "diagnostics": "all"
     },
-    "ruff": {
-      "initialization_options": {
-        "lineLength": 80,
-        "lint": {
-          "extendSelect": [
-            "I"
-          ]
-        }
-      }
+    "tab_bar": {
+        "show": true,
+        "show_nav_history_buttons": true,
+        "show_tab_bar_buttons": true
     },
-    "rust-analyzer": {
-      "binary": {
-        "ignore_system_version": true
+    "tabs": {
+        "close_position": "right",
+        "file_icons": true,
+        "git_status": true,
+        "activate_on_close": "history",
+        "show_close_button": "hover"
+    },
+    "toolbar": {
+        "breadcrumbs": true,
+        "quick_actions": true
+    },
+    "enable_language_server": true,
+    "ensure_final_newline_on_save": true,
+    "format_on_save": "off",
+    "formatter": "language_server",
+    "file_scan_exclusions": [
+        "**/.git",
+        "**/.svn",
+        "**/.hg",
+        "**/.jj",
+        "**/CVS",
+        "**/.DS_Store",
+        "**/Thumbs.db",
+        "**/.classpath",
+        "**/.settings",
+        "**/env",
+        "**/.venv",
+        "**/venv",
+        "**/node_modules",
+        "**/.idea",
+        "**/target",
+        "**/build",
+        "**/__pycache__",
+        "**/.pytest_cache"
+    ],
+    "file_scan_inclusions": [
+        ".env*"
+    ],
+    "git": {
+        "git_gutter": "tracked_files",
+        "inline_blame": {
+            "enabled": true,
+            "delay_ms": 600
+        },
+        "hunk_style": "staged_hollow"
+    },
+    "remove_trailing_whitespace_on_save": false,
+    "project_panel": {
+        "button": true,
+        "default_width": 240,
+        "dock": "left",
+        "file_icons": true,
+        "git_status": true,
+        "indent_size": 20,
+        "auto_reveal_entries": true,
+        "auto_fold_dirs": true,
+        "scrollbar": {
+            "show": "auto"
+        }
+    },
+    "outline_panel": {
+        "button": true,
+        "default_width": 300,
+        "dock": "left",
+        "file_icons": true,
+        "git_status": true,
+        "indent_size": 20,
+        "auto_reveal_entries": true,
+        "auto_fold_dirs": true,
+        "scrollbar": {
+            "show": "auto"
+        }
+    },
+    "collaboration_panel": {
+        "button": true,
+        "dock": "left",
+        "default_width": 240
+    },
+    "git_panel": {
+        "button": true,
+        "dock": "left",
+        "default_width": 360,
+        "status_style": "icon",
+        "fallback_branch_name": "main",
+        "sort_by_path": false,
+        "collapse_untracked_diff": false,
+        "scrollbar": {
+            "show": "auto"
+        }
+    },
+    "show_completions_on_input": true,
+    "show_completion_documentation": true,
+    "show_edit_predictions": true,
+    "cursor_blink": true,
+    "cursor_shape": "bar",
+    "gutter": {
+        "line_numbers": true,
+        "runnables": true,
+        "breakpoints": true,
+        "folds": true
+    },
+    "indent_guides": {
+        "enabled": true,
+        "coloring": "fixed",
+        "background_coloring": "disabled"
+    },
+    "inlay_hints": {
+        "enabled": true,
+        "show_type_hints": true,
+        "show_parameter_hints": true,
+        "show_other_hints": true,
+        "edit_debounce_ms": 700,
+        "scroll_debounce_ms": 50
+    },
+    "soft_wrap": "none",
+    "preferred_line_length": 80,
+    "show_wrap_guides": true,
+    "wrap_guides": [
+        80
+    ],
+    "tab_size": 4,
+    "hard_tabs": false,
+    "use_autoclose": true,
+    "always_treat_brackets_as_autoclosed": false,
+    "use_auto_surround": true,
+    "hover_popover_enabled": true,
+    "hover_popover_delay": 300,
+    "multi_cursor_modifier": "alt",
+    "scroll_sensitivity": 1.0,
+    "vertical_scroll_margin": 3,
+    "horizontal_scroll_margin": 5,
+    "search": {
+        "whole_word": false,
+        "case_sensitive": false,
+        "include_ignored": false,
+        "regex": false
+    },
+    "use_smartcase_search": true,
+    "seed_search_query_from_cursor": "always",
+    "telemetry": {
+        "diagnostics": true,
+        "metrics": true
+    },
+    "vim_mode": false,
+    "languages": {
+      "Python": {
+        "language_servers": [
+          "basedpyright"
+        ]
       },
-      "initialize_options": {
-        "inlayHints": {
-          "maxLength": null,
-          "lifetimeElisionHints": {
-            "enable": "skip_trivial",
-            "useParameterNames": true
-          },
-          "closureReturnTypeHints": {
-            "enable": "always"
-          }
+      "JavaScript": {
+        "tab_size": 2,
+        "preferred_line_length": 100,
+        "format_on_save": "on"
+      },
+      "TypeScript": {
+        "tab_size": 2,
+        "preferred_line_length": 100,
+        "format_on_save": "on"
+      },
+      "JSON": {
+        "tab_size": 2,
+        "format_on_save": "on"
+      },
+      "YAML": {
+        "tab_size": 2,
+        "format_on_save": "on"
+      },
+      "Markdown": {
+        "soft_wrap": "preferred_line_length",
+        "preferred_line_length": 80,
+        "format_on_save": "off"
+      }
+    },
+    "global_lsp_settings": {
+        "button": true
+    },
+    "lsp": {
+        "basedpyright": {
+            "settings": {
+                "analysis": {
+                    "diagnosticMode": "workspace",
+                    "inlayHints.callArgumentNames": false
+                }
+            }
         },
-        "rust": {
-          "analyzerTargetDir": true
+      "ruff": {
+        "initialization_options": {
+          "settings": {
+              "exclude": ["*"]
+          }
+        }
+      },
+      "rust-analyzer": {
+        "initialization_options": {
+          "check": {
+            "command": "clippy"
+          },
+          "inlayHints": {
+            "maxLength": null,
+            "lifetimeElisionHints": {
+              "enable": "skip_trivial",
+              "useParameterNames": true
+            },
+            "closureReturnTypeHints": {
+              "enable": "always"
+            }
+          },
+          "rust": {
+            "analyzerTargetDir": true
+          },
+          "cargo": {
+            "features": "all"
+          }
+        }
+      },
+      "typescript-language-server": {
+        "initialization_options": {
+          "preferences": {
+            "disableSuggestions": false,
+            "quotePreference": "double",
+            "includeCompletionsForModuleExports": true,
+            "includeCompletionsWithSnippetText": true,
+            "includeCompletionsForImportStatements": true
+          }
+        }
+      },
+      "eslint": {
+        "settings": {
+          "codeAction": {
+            "disableRuleComment": {
+              "enable": true,
+              "location": "separateLine"
+            },
+            "showDocumentation": {
+              "enable": true
+            }
+          },
+          "validate": "on",
+          "run": "onType"
+        }
+      },
+      "jdtls": {
+        "initialization_options": {}
+      }
+    },
+    "context_servers": {
+      "mcp-server-context7": {
+        "source": "extension",
+        "settings": {
+          "default_minimum_tokens": "10000"
         }
       }
     }
-  }
 }
