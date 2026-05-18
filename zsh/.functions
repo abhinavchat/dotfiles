@@ -243,7 +243,7 @@ ocprod() {
     echo "🔐 Retrieving ROSA Console Prod credentials from KeePassXC..."
     echo "Please enter your KeePassXC master password when prompted."
 
-    local keepass_db=~/Keepass/Sentry.kdbx
+    local keepass_db=~/Keepass/Abhinav/Sentry.kdbx
     local entry_name='ROSA Console Prod'
 
     # Check if KeePassXC CLI exists (always use direct path to avoid alias issues)
@@ -305,7 +305,7 @@ ocnonprod() {
     echo "🔐 Retrieving ROSA Console Dev credentials from KeePassXC..."
     echo "Please enter your KeePassXC master password when prompted."
 
-    local keepass_db=~/Keepass/Sentry.kdbx
+    local keepass_db=~/Keepass/Abhinav/Sentry.kdbx
     local entry_name='ROSA Console Dev'
 
     # Check if KeePassXC CLI exists (always use direct path to avoid alias issues)

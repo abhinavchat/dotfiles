@@ -132,6 +132,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 
    # ✅ FORCE SDKMAN JAVA FIRST in PATH
    export PATH="$JAVA_HOME/bin:$PATH"
+   export LLAMA_CACHE_DIR="$HOME/.models/llama"
 fi
 
 source $ZSH/oh-my-zsh.sh
@@ -194,3 +195,21 @@ fpath=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
+
+# Added by Antigravity
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:$HOME/.lmstudio/bin"
+# End of LM Studio CLI section
+
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Honcho Secrets
+[ -f "$HOME/.config/mcp/honcho.env" ] && source "$HOME/.config/mcp/honcho.env"
