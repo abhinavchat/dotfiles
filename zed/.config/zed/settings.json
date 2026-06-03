@@ -1,411 +1,459 @@
 {
-    "icon_theme": "Colored Zed Icons Theme Dark",
-    "cli_default_open_behavior": "existing_window",
-    "agent_servers": {
-        "gemini": {
-            "type": "registry"
-        },
-        "cursor": {
-            "type": "registry"
-        },
-        "claude-acp": {
-            "type": "registry"
-        },
-        "codex-acp": {
-            "type": "registry"
-        }
+  "auto_update_extensions": {
+    "java": true
+  },
+  "icon_theme": "Colored Zed Icons Theme Dark",
+  "cli_default_open_behavior": "existing_window",
+  "agent_servers": {
+    "pi-acp": {
+      "type": "registry"
     },
-    "proxy": "",
-    "edit_predictions": {
-        "provider": "zed"
+    "opencode": {
+      "type": "registry"
     },
-    "language_models": {
-        "openai_compatible": {
-            "Qwen3Coder": {
-                "api_url": "http://127.0.0.1:8080/v1",
-                "available_models": [
-                    {
-                        "name": "qwen3-coder",
-                        "max_tokens": 200000,
-                        "max_output_tokens": 32000,
-                        "max_completion_tokens": 200000,
-                        "capabilities": {
-                            "tools": true,
-                            "images": false,
-                            "parallel_tool_calls": false,
-                            "prompt_cache_key": false
-                        }
-                    }
-                ]
+    "gemini": {
+      "type": "registry"
+    },
+    "cursor": {
+      "type": "registry"
+    },
+    "claude-acp": {
+      "type": "registry"
+    },
+    "codex-acp": {
+      "type": "registry"
+    }
+  },
+  "proxy": "",
+  "edit_predictions": {
+    "provider": "zed"
+  },
+  "language_models": {
+    "openai_compatible": {
+      "Qwen3Coder": {
+        "api_url": "http://127.0.0.1:8080/v1",
+        "available_models": [
+          {
+            "name": "qwen3-coder",
+            "max_tokens": 200000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false
             }
-        }
-    },
-    "title_bar": {
-        "show_branch_status_icon": true,
-        "show_menus": true
-    },
-    "diagnostics": {
-        "inline": {
-            "enabled": true
-        }
-    },
-    "prettier": {
-        "allowed": true
-    },
-    "show_signature_help_after_edits": true,
-    "ssh_connections": [
-        {
-            "host": "192.168.1.14",
-            "username": "adminuser",
-            "args": [],
-            "projects": [
-                {
-                    "paths": [
-                        "/home/adminuser/homelab"
-                    ]
-                }
-            ]
-        },
-        {
-            "host": "homelab.taildd4b8c.ts.net",
-            "username": "adminuser",
-            "args": [],
-            "projects": [
-                {
-                    "paths": [
-                        "/home/adminuser"
-                    ]
-                }
-            ],
-            "nickname": "HomeLab"
-        }
-    ],
-    "auto_signature_help": true,
-    "auto_update": true,
-    "base_keymap": "JetBrains",
-    "close_on_file_delete": true,
-    "agent": {
-        "profiles": {
-            "research": {
-                "name": "Research",
-                "tools": {},
-                "enable_all_context_servers": false,
-                "context_servers": {}
-            }
-        },
-        "dock": "right",
-        "tool_permissions": {
-            "default": "allow"
-        },
-        "default_model": {
-            "effort": "high",
-            "enable_thinking": true,
-            "provider": "anthropic",
-            "model": "claude-sonnet-4-6-latest"
-        },
-        "default_profile": "ask",
-        "model_parameters": []
-    },
-    "terminal": {
-        "font_family": "MesloLGS NF",
-        "dock": "bottom",
-        "copy_on_select": false,
-        "blinking": "terminal_controlled",
-        "button": true,
-        "working_directory": "current_project_directory",
-        "detect_venv": {
-            "on": {
-                "directories": [
-                    ".venv",
-                    ".env"
-                ],
-                "activate_script": "default"
-            }
-        },
-        "toolbar": {
-            "breadcrumbs": true
-        }
-    },
-    "theme": "Catppuccin Mocha",
-    "buffer_font_family": ".ZedMono",
-    "buffer_font_size": 15,
-    "confirm_quit": false,
-    "scrollbar": {
-        "show": "auto",
-        "cursors": true,
-        "git_diff": true,
-        "search_results": true,
-        "selected_symbol": true,
-        "diagnostics": "all"
-    },
-    "tab_bar": {
-        "show": true,
-        "show_nav_history_buttons": true,
-        "show_tab_bar_buttons": true
-    },
-    "tabs": {
-        "close_position": "right",
-        "file_icons": true,
-        "git_status": true,
-        "activate_on_close": "history",
-        "show_close_button": "hover"
-    },
-    "toolbar": {
-        "code_actions": true,
-        "breadcrumbs": true,
-        "quick_actions": true
-    },
-    "enable_language_server": true,
-    "ensure_final_newline_on_save": true,
-    "format_on_save": "off",
-    "formatter": "language_server",
-    "file_scan_exclusions": [
-        "**/.git",
-        "**/.svn",
-        "**/.hg",
-        "**/.jj",
-        "**/CVS",
-        "**/.DS_Store",
-        "**/Thumbs.db",
-        "**/.classpath",
-        "**/.settings",
-        "**/env",
-        "**/.venv",
-        "**/venv",
-        "**/node_modules",
-        "**/.idea",
-        "**/target",
-        "**/build",
-        "**/__pycache__",
-        "**/.pytest_cache"
-    ],
-    "file_scan_inclusions": [
-        ".env*"
-    ],
-    "git": {
-        "git_gutter": "tracked_files",
-        "inline_blame": {
-            "show_commit_summary": true,
-            "enabled": true,
-            "delay_ms": 600
-        },
-        "hunk_style": "unstaged_hollow"
-    },
-    "remove_trailing_whitespace_on_save": false,
-    "project_panel": {
-        "button": true,
-        "default_width": 240,
-        "dock": "left",
-        "file_icons": true,
-        "git_status": true,
-        "indent_size": 20,
-        "auto_reveal_entries": true,
-        "auto_fold_dirs": true,
-        "scrollbar": {
-            "show": "auto"
-        }
-    },
-    "outline_panel": {
-        "button": true,
-        "default_width": 300,
-        "dock": "left",
-        "file_icons": true,
-        "git_status": true,
-        "indent_size": 20,
-        "auto_reveal_entries": true,
-        "auto_fold_dirs": true,
-        "scrollbar": {
-            "show": "auto"
-        }
-    },
-    "collaboration_panel": {
-        "button": true,
-        "dock": "left",
-        "default_width": 240
-    },
-    "git_panel": {
-        "button": true,
-        "dock": "left",
-        "default_width": 360,
-        "status_style": "icon",
-        "fallback_branch_name": "main",
-        "sort_by_path": false,
-        "collapse_untracked_diff": false,
-        "scrollbar": {
-            "show": "auto"
-        }
-    },
-    "show_completions_on_input": true,
-    "show_completion_documentation": true,
-    "show_edit_predictions": true,
-    "cursor_blink": true,
-    "cursor_shape": "bar",
-    "gutter": {
-        "line_numbers": true,
-        "runnables": true,
-        "breakpoints": true,
-        "folds": true
-    },
-    "indent_guides": {
-        "enabled": true,
-        "coloring": "fixed",
-        "background_coloring": "disabled"
-    },
-    "inlay_hints": {
-        "enabled": true,
-        "show_type_hints": true,
-        "show_parameter_hints": true,
-        "show_other_hints": true,
-        "edit_debounce_ms": 700,
-        "scroll_debounce_ms": 50
-    },
-    "soft_wrap": "none",
-    "preferred_line_length": 80,
-    "show_wrap_guides": true,
-    "wrap_guides": [
-        80
-    ],
-    "tab_size": 4,
-    "hard_tabs": false,
-    "use_autoclose": true,
-    "always_treat_brackets_as_autoclosed": false,
-    "use_auto_surround": true,
-    "hover_popover_enabled": true,
-    "hover_popover_delay": 300,
-    "multi_cursor_modifier": "alt",
-    "scroll_sensitivity": 1.0,
-    "vertical_scroll_margin": 3,
-    "horizontal_scroll_margin": 5,
-    "search": {
-        "whole_word": false,
-        "case_sensitive": false,
-        "include_ignored": false,
-        "regex": false
-    },
-    "use_smartcase_search": true,
-    "seed_search_query_from_cursor": "always",
-    "telemetry": {
-        "diagnostics": false,
-        "metrics": false
-    },
-    "vim_mode": false,
-    "languages": {
-      "Python": {
-        "language_servers": [
-          "basedpyright"
+          }
         ]
-      },
-      "JavaScript": {
-        "tab_size": 2,
-        "preferred_line_length": 100,
-        "format_on_save": "on"
-      },
-      "TypeScript": {
-        "tab_size": 2,
-        "preferred_line_length": 100,
-        "format_on_save": "on"
-      },
-      "JSON": {
-        "tab_size": 2,
-        "format_on_save": "on"
-      },
-      "YAML": {
-        "tab_size": 2,
-        "format_on_save": "on"
-      },
-      "Markdown": {
-        "soft_wrap": "preferred_line_length",
-        "preferred_line_length": 80,
-        "format_on_save": "off"
-      }
-    },
-    "global_lsp_settings": {
-        "button": true
-    },
-    "lsp": {
-        "basedpyright": {
-            "settings": {
-                "analysis": {
-                    "diagnosticMode": "workspace",
-                    "inlayHints.callArgumentNames": false
-                }
-            }
-        },
-      "ruff": {
-        "initialization_options": {
-          "settings": {
-              "exclude": ["*"]
-          }
-        }
-      },
-      "rust-analyzer": {
-        "initialization_options": {
-          "check": {
-            "command": "clippy"
-          },
-          "inlayHints": {
-            "maxLength": null,
-            "lifetimeElisionHints": {
-              "enable": "skip_trivial",
-              "useParameterNames": true
-            },
-            "closureReturnTypeHints": {
-              "enable": "always"
-            }
-          },
-          "rust": {
-            "analyzerTargetDir": true
-          },
-          "cargo": {
-            "features": "all"
-          }
-        }
-      },
-      "typescript-language-server": {
-        "initialization_options": {
-          "preferences": {
-            "disableSuggestions": false,
-            "quotePreference": "double",
-            "includeCompletionsForModuleExports": true,
-            "includeCompletionsWithSnippetText": true,
-            "includeCompletionsForImportStatements": true
-          }
-        }
-      },
-      "eslint": {
-        "settings": {
-          "codeAction": {
-            "disableRuleComment": {
-              "enable": true,
-              "location": "separateLine"
-            },
-            "showDocumentation": {
-              "enable": true
-            }
-          },
-          "validate": "on",
-          "run": "onType"
-        }
-      },
-      "jdtls": {
-        "initialization_options": {}
-      }
-    },
-    "context_servers": {
-      "honcho": {
-         "enabled": true,
-         "url": "https://mcp.honcho.dev",
-         "headers": {
-            "X-Honcho-Assistant-Name": "zed",
-            "X-Honcho-Workspace-ID": "claude_code",
-            "X-Honcho-User-Name": "abhinavchat",
-            "Authorization": "Bearer ${HONCHO_API_KEY}"
-         }
-      },
-      "mcp-server-context7": {
-        "settings": {
-          "default_minimum_tokens": "10000"
-        }
       }
     }
+  },
+  "title_bar": {
+    "show_branch_status_icon": true,
+    "show_menus": true
+  },
+  "diagnostics": {
+    "inline": {
+      "enabled": true
+    }
+  },
+  "prettier": {
+    "allowed": true
+  },
+  "show_signature_help_after_edits": true,
+  "ssh_connections": [
+    {
+      "host": "192.168.1.14",
+      "username": "adminuser",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/adminuser/homelab"
+          ]
+        }
+      ]
+    },
+    {
+      "host": "homelab.taildd4b8c.ts.net",
+      "username": "adminuser",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/adminuser"
+          ]
+        }
+      ],
+      "nickname": "HomeLab"
+    }
+  ],
+  "auto_signature_help": true,
+  "auto_update": true,
+  "base_keymap": "JetBrains",
+  "close_on_file_delete": true,
+  "agent": {
+    "profiles": {
+      "research": {
+        "name": "Research",
+        "tools": {},
+        "enable_all_context_servers": false,
+        "context_servers": {}
+      }
+    },
+    "dock": "right",
+    "tool_permissions": {
+      "default": "allow"
+    },
+    "default_model": {
+      "effort": "high",
+      "enable_thinking": true,
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-6-latest"
+    },
+    "default_profile": "ask",
+    "model_parameters": []
+  },
+  "terminal": {
+    "font_family": "MesloLGS NF",
+    "dock": "bottom",
+    "copy_on_select": false,
+    "blinking": "terminal_controlled",
+    "button": true,
+    "working_directory": "current_project_directory",
+    "detect_venv": {
+      "on": {
+        "directories": [
+          ".venv",
+          ".env"
+        ],
+        "activate_script": "default"
+      }
+    },
+    "toolbar": {
+      "breadcrumbs": true
+    }
+  },
+  "theme": "Catppuccin Mocha",
+  "buffer_font_family": ".ZedMono",
+  "buffer_font_size": 15,
+  "confirm_quit": false,
+  "scrollbar": {
+    "show": "auto",
+    "cursors": true,
+    "git_diff": true,
+    "search_results": true,
+    "selected_symbol": true,
+    "diagnostics": "all"
+  },
+  "tab_bar": {
+    "show": true,
+    "show_nav_history_buttons": true,
+    "show_tab_bar_buttons": true
+  },
+  "tabs": {
+    "close_position": "right",
+    "file_icons": true,
+    "git_status": true,
+    "activate_on_close": "history",
+    "show_close_button": "hover"
+  },
+  "toolbar": {
+    "code_actions": true,
+    "breadcrumbs": true,
+    "quick_actions": true
+  },
+  "enable_language_server": true,
+  "ensure_final_newline_on_save": true,
+  "format_on_save": "off",
+  "formatter": "language_server",
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/.jj",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    "**/env",
+    "**/.venv",
+    "**/venv",
+    "**/node_modules",
+    "**/.idea",
+    "**/target",
+    "**/build",
+    "**/__pycache__",
+    "**/.pytest_cache"
+  ],
+  "file_scan_inclusions": [
+    ".env*"
+  ],
+  "git": {
+    "git_gutter": "tracked_files",
+    "inline_blame": {
+      "show_commit_summary": true,
+      "enabled": true,
+      "delay_ms": 600
+    },
+    "hunk_style": "unstaged_hollow"
+  },
+  "remove_trailing_whitespace_on_save": false,
+  "project_panel": {
+    "button": true,
+    "default_width": 240,
+    "dock": "left",
+    "file_icons": true,
+    "git_status": true,
+    "indent_size": 20,
+    "auto_reveal_entries": true,
+    "auto_fold_dirs": true,
+    "scrollbar": {
+      "show": "auto"
+    }
+  },
+  "outline_panel": {
+    "button": true,
+    "default_width": 300,
+    "dock": "left",
+    "file_icons": true,
+    "git_status": true,
+    "indent_size": 20,
+    "auto_reveal_entries": true,
+    "auto_fold_dirs": true,
+    "scrollbar": {
+      "show": "auto"
+    }
+  },
+  "collaboration_panel": {
+    "button": true,
+    "dock": "left",
+    "default_width": 240
+  },
+  "git_panel": {
+    "button": true,
+    "dock": "left",
+    "default_width": 360,
+    "status_style": "icon",
+    "fallback_branch_name": "main",
+    "sort_by_path": false,
+    "collapse_untracked_diff": false,
+    "scrollbar": {
+      "show": "auto"
+    }
+  },
+  "show_completions_on_input": true,
+  "show_completion_documentation": true,
+  "show_edit_predictions": true,
+  "cursor_blink": true,
+  "cursor_shape": "bar",
+  "gutter": {
+    "line_numbers": true,
+    "runnables": true,
+    "breakpoints": true,
+    "folds": true
+  },
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "fixed",
+    "background_coloring": "disabled"
+  },
+  "inlay_hints": {
+    "enabled": true,
+    "show_type_hints": true,
+    "show_parameter_hints": true,
+    "show_other_hints": true,
+    "edit_debounce_ms": 700,
+    "scroll_debounce_ms": 50
+  },
+  "soft_wrap": "none",
+  "preferred_line_length": 80,
+  "show_wrap_guides": true,
+  "wrap_guides": [
+    80
+  ],
+  "tab_size": 4,
+  "hard_tabs": false,
+  "use_autoclose": true,
+  "always_treat_brackets_as_autoclosed": false,
+  "use_auto_surround": true,
+  "hover_popover_enabled": true,
+  "hover_popover_delay": 300,
+  "multi_cursor_modifier": "alt",
+  "scroll_sensitivity": 1,
+  "vertical_scroll_margin": 3,
+  "horizontal_scroll_margin": 5,
+  "search": {
+    "whole_word": false,
+    "case_sensitive": false,
+    "include_ignored": false,
+    "regex": false
+  },
+  "use_smartcase_search": true,
+  "seed_search_query_from_cursor": "always",
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "vim_mode": false,
+  "languages": {
+    "Python": {
+      "language_servers": [
+        "basedpyright"
+      ]
+    },
+    "JavaScript": {
+      "tab_size": 2,
+      "preferred_line_length": 100,
+      "format_on_save": "on"
+    },
+    "TypeScript": {
+      "tab_size": 2,
+      "preferred_line_length": 100,
+      "format_on_save": "on"
+    },
+    "JSON": {
+      "tab_size": 2,
+      "format_on_save": "on"
+    },
+    "YAML": {
+      "tab_size": 2,
+      "format_on_save": "on"
+    },
+    "Markdown": {
+      "soft_wrap": "preferred_line_length",
+      "preferred_line_length": 80,
+      "format_on_save": "off"
+    }
+  },
+  "global_lsp_settings": {
+    "button": true
+  },
+  "lsp": {
+    "basedpyright": {
+      "settings": {
+        "analysis": {
+          "diagnosticMode": "workspace",
+          "inlayHints.callArgumentNames": false
+        }
+      }
+    },
+    "ruff": {
+      "initialization_options": {
+        "settings": {
+          "exclude": [
+            "*"
+          ]
+        }
+      }
+    },
+    "rust-analyzer": {
+      "initialization_options": {
+        "check": {
+          "command": "clippy"
+        },
+        "inlayHints": {
+          "maxLength": null,
+          "lifetimeElisionHints": {
+            "enable": "skip_trivial",
+            "useParameterNames": true
+          },
+          "closureReturnTypeHints": {
+            "enable": "always"
+          }
+        },
+        "rust": {
+          "analyzerTargetDir": true
+        },
+        "cargo": {
+          "features": "all"
+        }
+      }
+    },
+    "typescript-language-server": {
+      "initialization_options": {
+        "preferences": {
+          "disableSuggestions": false,
+          "quotePreference": "double",
+          "includeCompletionsForModuleExports": true,
+          "includeCompletionsWithSnippetText": true,
+          "includeCompletionsForImportStatements": true
+        }
+      }
+    },
+    "eslint": {
+      "settings": {
+        "codeAction": {
+          "disableRuleComment": {
+            "enable": true,
+            "location": "separateLine"
+          },
+          "showDocumentation": {
+            "enable": true
+          }
+        },
+        "validate": "on",
+        "run": "onType"
+      }
+    },
+    "jdtls": {
+      "settings": {
+        "java_home": "/Users/abhinavchat/.sdkman/candidates/java/21.0.8-tem",
+        "lombok_support": true,
+        "jdk_auto_download": false,
+        "check_updates": "always",
+        "min_memory": "1G",
+        "max_memory": "4G"
+        },
+        "initialization_options": {
+          "settings": {
+            "java": {
+              "configuration": {
+                "runtimes": [
+                  {
+                    "name": "JavaSE-1.8",
+                    "path": "/Users/abhinavchat/.sdkman/candidates/java/8.0.462-zulu"
+                  },
+                  {
+                    "name": "JavaSE-21",
+                    "path": "/Users/abhinavchat/.sdkman/candidates/java/21.0.8-tem",
+                    "default": true
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+  },
+  "context_servers": {
+    "honcho": {
+      "enabled": true,
+      "url": "https://mcp.honcho.dev",
+      "headers": {
+        "X-Honcho-Assistant-Name": "zed",
+        "X-Honcho-Workspace-ID": "claude_code",
+        "X-Honcho-User-Name": "abhinavchat",
+        "Authorization": "Bearer ${HONCHO_API_KEY}"
+      }
+    },
+    "mcp-server-context7": {
+      "settings": {
+        "default_minimum_tokens": "10000"
+      }
+    },
+    "MCP_DOCKER": {
+      "enabled": true,
+      "command": "docker",
+      "args": [
+        "mcp",
+        "gateway",
+        "run",
+        "--profile",
+        "default"
+      ]
+    }
+  }
 }
