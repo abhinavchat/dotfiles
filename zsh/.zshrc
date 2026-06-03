@@ -213,3 +213,14 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Honcho Secrets
 [ -f "$HOME/.config/mcp/honcho.env" ] && source "$HOME/.config/mcp/honcho.env"
+
+# Editor of choice in coding agents for larger formatted prompts
+export VISUAL="zed --wait"
+export EDITOR="zed --wait"
+
+
+# Added by Antigravity CLI installer
+export PATH="$HOME/.local/bin:$PATH"
+
+# Added by Antigravity IDE
+export PATH="$HOME/.antigravity-ide/antigravity-ide/bin:$PATH"
