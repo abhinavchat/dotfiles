@@ -1,0 +1,87 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+    {
+        "bindings": {
+            "cmd-shift-p": "command_palette::Toggle",
+            "ctrl-shift-p": "command_palette::Toggle",
+            "shift shift": "file_finder::Toggle",
+            "cmd-shift-o": "outline::Toggle",
+            "ctrl-shift-o": "outline::Toggle",
+            "cmd-shift-f": "project_search::ToggleFocus",
+            "ctrl-shift-f": "project_search::ToggleFocus",
+            "cmd-shift-e": "project_panel::ToggleFocus",
+            "ctrl-shift-e": "project_panel::ToggleFocus",
+            "cmd-1": "project_panel::Toggle",
+            "ctrl-1": "project_panel::Toggle",
+            "cmd-`": "terminal_panel::Toggle",
+            "ctrl-`": "terminal_panel::Toggle",
+            "cmd-l": "agent::Toggle",
+            "cmd-shift-b": "workspace::ToggleLeftDock",
+            "ctrl-shift-b": "workspace::ToggleLeftDock",
+            "cmd-shift-m": "diagnostics::Deploy",
+            "ctrl-shift-m": "diagnostics::Deploy",
+            "cmd-g": "go_to_line::Toggle",
+            "ctrl-g": "go_to_line::Toggle",
+        }
+    },
+    {
+        "context": "Workspace",
+        "bindings": {
+            "cmd-k left": "workspace::ActivatePaneLeft",
+            "cmd-k right": "workspace::ActivatePaneRight",
+            "cmd-k up": "workspace::ActivatePaneUp",
+            "cmd-k down": "workspace::ActivatePaneDown",
+            "ctrl-k left": "workspace::ActivatePaneLeft",
+            "ctrl-k right": "workspace::ActivatePaneRight",
+            "ctrl-k up": "workspace::ActivatePaneUp",
+            "ctrl-k down": "workspace::ActivatePaneDown",
+            "cmd-shift-v": "pane::SplitVertical",
+            "ctrl-shift-v": "pane::SplitVertical",
+            "cmd-shift-h": "pane::SplitHorizontal",
+            "ctrl-shift-h": "pane::SplitHorizontal",
+            "cmd-w": "pane::CloseActiveItem",
+            "ctrl-w": "pane::CloseActiveItem",
+            "cmd-f9": "task::Spawn",
+            "ctrl-f9": "task::Spawn",
+        }
+    },
+    {
+        "context": "Editor",
+        "bindings": {
+            "cmd-/": "editor::ToggleComments",
+            "ctrl-/": "editor::ToggleComments",
+            "cmd-d": "editor::SelectNext",
+            "ctrl-d": "editor::SelectNext",
+            "cmd-.": "editor::ToggleCodeActions",
+            "ctrl-.": "editor::ToggleCodeActions",
+            "cmd-r": "editor::Rename",
+            "ctrl-r": "editor::Rename",
+            "cmd-enter": "editor::NewlineBelow",
+            "ctrl-enter": "editor::NewlineBelow",
+            "cmd-shift-enter": "editor::NewlineAbove",
+            "ctrl-shift-enter": "editor::NewlineAbove",
+            // Code navigation
+            "cmd-b": "editor::GoToDefinition",
+            "ctrl-b": "editor::GoToDefinition",
+            "cmd-shift-b": "editor::GoToDefinitionSplit",
+            "ctrl-shift-b": "editor::GoToDefinitionSplit",
+            "cmd-u": "editor::GoToTypeDefinition",
+            "ctrl-u": "editor::GoToTypeDefinition",
+            "cmd-k i": "editor::GoToImplementation",
+            "ctrl-k i": "editor::GoToImplementation",
+            "ctrl--": "pane::GoBack",
+            "ctrl-shift--": "pane::GoForward",
+            "alt-f7": "editor::FindAllReferences",
+            // Formatting
+            "cmd-alt-l": "editor::Format",
+            "ctrl-alt-l": "editor::Format",
+            "alt-shift-f9": "debugger::Start"
+        }
+    }
+]

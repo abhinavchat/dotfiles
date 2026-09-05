@@ -1,10 +1,16 @@
 {
+  "completions": {
+    "lsp": false
+  },
   "auto_update_extensions": {
     "java": true
   },
   "icon_theme": "Colored Zed Icons Theme Dark",
   "cli_default_open_behavior": "existing_window",
   "agent_servers": {
+    "claude-acp": {
+      "type": "registry"
+    },
     "pi-acp": {
       "type": "registry"
     },
@@ -17,10 +23,12 @@
     "cursor": {
       "type": "registry"
     },
-    "claude-acp": {
-      "type": "registry"
-    },
     "codex-acp": {
+      "default_config_options": {
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "medium",
+        "mode": "agent-full-access"
+      },
       "type": "registry"
     }
   },
@@ -87,6 +95,18 @@
         }
       ],
       "nickname": "HomeLab"
+    },
+    {
+      "host": "homelab.taildd4b8c.ts.net",
+      "username": "adminuser",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/adminuser/homelab/data/jupyter"
+          ]
+        }
+      ]
     }
   ],
   "auto_signature_help": true,
@@ -246,7 +266,7 @@
   },
   "show_completions_on_input": true,
   "show_completion_documentation": true,
-  "show_edit_predictions": true,
+  "show_edit_predictions": false,
   "cursor_blink": true,
   "cursor_shape": "bar",
   "gutter": {

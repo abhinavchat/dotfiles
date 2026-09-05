@@ -19,34 +19,6 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     alias keepassxc-cli='/Applications/KeePassXC.app/Contents/MacOS/keepassxc-cli'
 fi
 
-# Carey docker container command aliases
-alias ces-web-run='docker run --rm --platform linux/amd64 --name ces-web -p 9080:9080 -p 9443:9443 -p 7777:7777 ces-web'
-alias ces-web-build='docker build --platform linux/amd64 -f Dockerfile2 -t ces-web .'
-
-alias res-ear-run='docker run --rm --platform linux/amd64 --name res-ear-temp -p 9090:9080 -p 9444:9443 res-ear-temp'
-
-alias websocket-run='java -jar build/libs/websocketapi-1.0.jar'
-
-alias swingui-run='java -Xms32m \
-  -classpath Res-Core-copied.jar:cctoken-client.jar:toplink.jar:cglib-asm-1.0.jar:dynaop-1.0.jar:jbcl.jar:xstream-1.1.1.jar:mail.jar:poi-3.5-FINAL-20090928.jar \
-  -Dces.url.server1=http://localhost:9090/Res/ \
-  -Dces.url.server2=http://localhost:9090/Res/ -DDISPATCH_CONNECT_PORT=3055 \
-  ctts.presentation.uiframework.GUIMainController'
-
-alias csi-res-profile-run='docker run --rm --platform linux/amd64 --name csi-res-profile -p 9070:9080 -p 9445:9443 csi-res-profile'
-
-alias ces-direct-run='docker run --rm --platform linux/amd64 --name ces-direct -p 9030:9080 -p 9447:9443 ces-direct'
-
-alias csi-ota-proxy-run='docker run --rm --platform linux/amd64 --name csi-ota-proxy -p 9050:8080 csi-ota-proxy'
-
-alias ces-batch-run='docker run --rm --platform linux/amd64 --name ces-batch -p 9060:9080 ces-batch'
-
-alias twoway-run='docker run --rm --platform linux/amd64 --name ces-int-twoway -p 9040:9080 -p 9446:9443 ces-int-twoway'
-
-alias notification-run='docker run --rm --platform linux/amd64 -p 9020:9080 carey-notification'
-
-alias trip-status-api-run='docker run --rm --platform linux/amd64 -p 9991:9999 trip-status-api'
-
 # Git pre-push check
 alias git-prepushcheck='
 echo "🧭 Current branch:" && \
@@ -62,3 +34,11 @@ git push --dry-run
 # Openshift ROSA
 alias kcshow='echo "Current kubeconfig: ${KUBECONFIG:-$HOME/.kube/config}" && echo "Current Context: $(oc config current-context)" && echo "User: $(oc whoami)"'
 alias kcreset='export KUBECONFIG=$HOME/.kube/config && echo "🔄 Reset to default kubeconfig" && oc whoami'
+
+# fabric-ai
+alias fabric='fabric-ai'
+
+# Use headroom with coding agents
+alias claude='headroom wrap claude --'
+alias codex='headroom wrap codex --'
+alias opencode='headroom wrap opencode --'

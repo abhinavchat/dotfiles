@@ -133,6 +133,9 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
    # ✅ FORCE SDKMAN JAVA FIRST in PATH
    export PATH="$JAVA_HOME/bin:$PATH"
    export LLAMA_CACHE_DIR="$HOME/.models/llama"
+
+   # GOPASS Age Key
+   #export GOPASS_AGE_KEY="$HOME/.config/gopass/agekey.txt"
 fi
 
 source $ZSH/oh-my-zsh.sh
